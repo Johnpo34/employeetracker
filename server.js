@@ -25,13 +25,15 @@ function init() {
             type: 'list',
             name: 'mainQuestion',
             message: 'What would you like to do?',
-            choices: ['View All', 'View Employee', 'View Department', 'View Role', 'Add Employee', 'Add, Department', 'Add Role', 'Update Employees Role']
+            choices: ['View All', 'View Employees', 'View Departments', 'View Roles', 'Add Employee', 'Add, Department', 'Add Role', 'Update Employees Role']
         }
       ]).then(answer => {
         if(answer.mainQuestion === 'View All') {
           viewAll()
-        } else if (answer.mainQuestion === 'View Employee') {
+        } else if (answer.mainQuestion === 'View Employees') {
           viewEmployee()
+        } else if (answer.mainQuestion === 'View Departments') {
+          viewDepartment()
         }
       })
 };
