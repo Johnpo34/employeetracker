@@ -25,7 +25,7 @@ function init() {
             type: 'list',
             name: 'mainQuestion',
             message: 'What would you like to do?',
-            choices: ['View All', 'View Employees', 'View Departments', 'View Roles', 'Add Employee', 'Add, Department', 'Add Role', 'Update Employees Role']
+            choices: ['View All', 'View Employees', 'View Departments', 'View Roles', 'Add Employee', 'Add Department', 'Add Role', 'Update Employees Role']
         }
       ]).then(answer => {
         if(answer.mainQuestion === 'View All') {
@@ -34,14 +34,22 @@ function init() {
           viewEmployee()
         } else if (answer.mainQuestion === 'View Departments') {
           viewDepartment()
-        }
+        } else if (answer.mainQuestion === 'View Roles') {
+          viewRoles()
+        } else if (answer.mainQuestion === 'Add Employee') {
+
+        } else if (answer.mainQuestion === 'Add Department') {
+
+        } else if (answer.mainQuestion === 'Add Role') {
+
+        } else if (answer.mainQuestion === 'Update Emplyees Role')
       })
 };
 
 
-function viewAll() {
-
-}
+// function viewAll() {
+//   SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT(manager.first_name, '', manager.last_name) AS manager FROM employee LEFT JOIN role on emplyee_id = role.id LEFT JOIN department on role.department_id = department.id LEFT JOIN employee manager on manager.id = employee.manager_id;
+// }
 
 // what would you like to do?
     // view all employees -- show table employee data, enployee ids, first name, last name, job titles, departments, salaries, their manager
