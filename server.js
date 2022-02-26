@@ -37,19 +37,17 @@ function init() {
         } else if (answer.mainQuestion === 'View Roles') {
           viewRoles()
         } else if (answer.mainQuestion === 'Add Employee') {
-
+          addEmployee()
         } else if (answer.mainQuestion === 'Add Department') {
-
+          addDepartment()
         } else if (answer.mainQuestion === 'Add Role') {
-
+          addRole()
         } else if (answer.mainQuestion === 'Update Emplyees Role')
+          updateEmployeeRole()
       })
 };
 
-
-// function viewAll() {
-//   SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT(manager.first_name, '', manager.last_name) AS manager FROM employee LEFT JOIN role on emplyee_id = role.id LEFT JOIN department on role.department_id = department.id LEFT JOIN employee manager on manager.id = employee.manager_id;
-// }
+db.query("SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT(manager.first_name, '', manager.last_name) AS manager FROM employee LEFT JOIN role ON emplyee_id = role.id LEFT JOIN department ON role.department_id = department.id LEFT JOIN employee manager ON manager.id = employee.manager_id;")
 
 // what would you like to do?
     // view all employees -- show table employee data, enployee ids, first name, last name, job titles, departments, salaries, their manager
