@@ -19,6 +19,10 @@ const db = mysql.createConnection(
   console.log(`Connected to the courses_db database.`)
 );
 
+function addEmployee() {
+  inquirer.get
+}
+// insert query to add data to employee table
 function init() {
     inquirer.prompt([
         {
