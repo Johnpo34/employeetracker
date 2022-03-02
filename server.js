@@ -1,5 +1,6 @@
 const express = require('express');
 const mysql = require('mysql2');
+const inquirer = require('inquirer');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -20,8 +21,32 @@ const db = mysql.createConnection(
 );
 
 function addEmployee() {
-  inquirer.get
-}
+  inquirer.prompt([
+    {
+      type: 'input',
+      name: 'Employee name',
+      message: 'Employees name?'
+    }
+  ]) .then(answers => {})
+
+  function addDepartment() {
+    inquirer.prompt([
+      {
+        type: 'input',
+        name: 'Department Name',
+        message: 'Name of department?'
+      }
+    ]) .then(answers => {})
+
+    function addRole() {
+      inquirer.prompt([
+        {
+          type: 'input',
+          name: 'Role name',
+          message: 'Name of role?'
+        }
+      ]) .then(answers => {})
+    
 // insert query to add data to employee table
 function init() {
     inquirer.prompt([

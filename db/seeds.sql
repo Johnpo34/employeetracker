@@ -16,13 +16,13 @@
 
 -- employee names
 
-INSERT INTO departments (id, department_name)
+INSERT INTO department (id, departments)
 VALUES (01, 'Sales'),
         (02, 'Engineering'),
         (03, 'Finance'),
         (04, 'Legal');
 
-INSERT INTO roles (id, roles_name)
+INSERT INTO role (id, roles)
 VALUES  (01, 'Sales lead'),
         (02, 'Salesperson'),
         (03, 'Lead Engineer'),
