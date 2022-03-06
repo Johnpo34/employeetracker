@@ -1,16 +1,19 @@
+const express = require("express");
 const mysql = require('mysql2');
-const inquirer = require('inquirer');
+const inquirer = require('inquire');
 
 const PORT = process.env.PORT || 3001;
+const app = express();
 
 const db = mysql.createConnection(
   {
     host: 'localhost',
     user: 'root',
     password: 'Password',
-    database: 'courses_db'
+    database: 'employee_db'
+    // differnet database?
   },
-  console.log(`Connected to the courses_db database.`)
+  console.log(`Connected to the employee_db database.`)
 );
 
 function addEmployee() {
@@ -26,7 +29,7 @@ function addEmployee() {
       if (err) throw err;
       console.log('$(answers.EmployeeName} added to the database');
     }
-  });
+  })};
 
   function addDepartment() {
     inquirer.prompt([
@@ -41,7 +44,7 @@ function addEmployee() {
           if (err) throw err;
           console.log('${answers.DepartmentName} added to the database.');
         }
-    });
+    })};
 
     function addRole() {
       inquirer.prompt([
@@ -56,7 +59,7 @@ function addEmployee() {
             if (err) throw err;
             console.log('$answers.RoleName} added to the database.');
           }
-      });
+    })};
 
       // insert query to add data to employee table
       function init() {
