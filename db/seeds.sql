@@ -22,7 +22,7 @@ VALUES (01, 'Sales'),
         (03, 'Finance'),
         (04, 'Legal');
 
-INSERT INTO roles (id, role)
+INSERT INTO roles (id, title, salary, department_id)
 VALUES  (01, 'Sales lead'),
         (02, 'Salesperson'),
         (03, 'Lead Engineer'),
@@ -31,3 +31,10 @@ VALUES  (01, 'Sales lead'),
         (06, 'Accountant'),
         (07, 'Legal Team Lead'),
         (08, 'Lawyer');
+
+INSERT INTO employee (id, first_name, last_name,role_id, manager_id)
+VALUES (01, 'John', 'Pohl'),
+        (02, 'Marc', 'Petrell'),
+        (03, 'Jordan', 'Cantley'),
+        (04, 'Larry', 'David'),
+        (05, 'Cooper', 'Jackson');
