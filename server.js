@@ -1,6 +1,7 @@
 const express = require("express");
 const mysql = require('mysql2');
 const inquirer = require('inquire');
+const { mainPrompts, departmentPrompts} = require('./lib/prompts');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
