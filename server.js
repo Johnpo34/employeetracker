@@ -1,7 +1,7 @@
 const express = require("express");
 const mysql = require('mysql2');
 const inquirer = require('inquire');
-const { mainPrompts, departmentPrompts} = require('./lib/prompts');
+const { mainPrompts, departmentPrompts } = require('./lib/prompts');
 
 
 const db = mysql.createConnection(
@@ -16,94 +16,133 @@ const db = mysql.createConnection(
 );
 
 function addEmployee() {
+  db.query(
+    'SELECT * FROM "role"',
+    function (err, roleList) {
+      console.log(roleList);
+
+      roleList = roleList.map(role => {
+        return {
+          value: role.id,
+          name: role.title,
+        };
+      });
+
+      db.query(
+        'SELECT * FROM "employee"',
+        function (err, employeeList) {
+          console.log(employeeList);
+
+
+
+          inquirer.prompt([
+            {
+              type: 'input',
+              name: 'firstName',
+              message: 'Employees first name?'
+            },
+            {
+              type: 'input',
+              name: 'lastName',
+              message: 'Employee last name?'
+            },
+            {
+              type: 'list',
+              choices: roleList,
+              name: 'roleId',
+              message: 'Please select a role for the user.',
+            }
+          ]).then(answers => {
+            db.query(
+              'INSERT INTO employee (first_name) VALUES (?);', [answers.firstName],
+              (err, res) => {
+                if (err) throw err;
+                console.log('$(answers.EmployeeName} added to the database');
+              }
+          })
+        }
+      )
+    }
+  )
+};
+
+function addDepartment() {
   inquirer.prompt([
     {
       type: 'input',
-      name: 'Employee name',
-      message: 'Employees name?'
+      name: 'departmentName',
+      message: 'Name of department?'
     }
+    // fix then.
   ]).then(answers => {
-    db.query('INSERT INTO employee (name) VALUES')
-    ('${answer.EmployeeName}'), (err, res) => {
-      if (err) throw err;
-      console.log('$(answers.EmployeeName} added to the database');
-    }
-  })};
-
-  function addDepartment() {
-    inquirer.prompt([
-      {
-        type: 'input',
-        name: 'Department Name',
-        message: 'Name of department?'
+    db.query('INSERT INTO departments (name) VALUES')
+      ('${answer.DepartmentName}'), (err, res) => {
+        if (err) throw err;
+        console.log('${answers.DepartmentName} added to the database.');
       }
-    ]).then(answers => {
-      db.query('INSERT INTO departments (name) VALUES')
-        ('${answer.DepartmentName}'), (err, res) => {
-          if (err) throw err;
-          console.log('${answers.DepartmentName} added to the database.');
-        }
-    })};
+  })
+};
 
-    function addRole() {
-      inquirer.prompt([
-        {
-          type: 'input',
-          name: 'Role name',
-          message: 'Name of role?'
+function addRole() {
+  db.query
+  inquirer.prompt([
+    {
+      type: 'input',
+      name: 'Role name',
+      message: 'Name of role?'
+    },
+    {
+      type: 'number',
+      name: 'name',
+      message: 'What is the name of the role?',
+    },
+    {
+      type: 'list',
+      name: 'department',
+      message: 'What department does the role go to?',
+      choices: 
         },
-        {
-          type: 'number',
-          name: 'name',
-          message: 'What is the name of the role?',
-        },
-        {
-          type: 'list',
-          name: 'department',
-          message: 'What department does the role go to?',
-          choices: 
-        },
+  // fix then
       ]).then(answers => {
-        db.query("INSERT INTO roles (name) VALUES")
-          ('${answer.RoleName}'), (err, res) => {
-            if (err) throw err;
-            console.log('$answers.RoleName} added to the database.');
-          }
-    })};
+    db.query("INSERT INTO role (name) VALUES")
+      ('${answer.RoleName}'), (err, res) => {
+        if (err) throw err;
+        console.log('$answers.RoleName} added to the database.');
+      }
+  })
+};
 
-      // insert query to add data to employee table
-      function init() {
-        inquirer.prompt([
-          {
-            type: 'list',
-            name: 'mainQuestion',
-            message: 'What would you like to do?',
-            choices: ['View All', 'View Employees', 'View Departments', 'View Roles', 'Add Employee', 'Add Department', 'Add Role', 'Update Employees Role']
-          }
-        ]).then(answer => {
-          if (answer.mainQuestion === 'View All') {
-            viewAll()
-          } else if (answer.mainQuestion === 'View Employees') {
-            viewEmployee()
-          } else if (answer.mainQuestion === 'View Departments') {
-            viewDepartment()
-          } else if (answer.mainQuestion === 'View Roles') {
-            viewRoles()
-          } else if (answer.mainQuestion === 'Add Employee') {
-            addEmployee()
-          } else if (answer.mainQuestion === 'Add Department') {
-            addDepartment()
-          } else if (answer.mainQuestion === 'Add Role') {
-            addRole()
-          } else if (answer.mainQuestion === 'Update Emplyees Role')
-            updateEmployeeRole()
-        })
-      };
+// insert query to add data to employee table
+function init() {
+  inquirer.prompt([
+    {
+      type: 'list',
+      name: 'mainQuestion',
+      message: 'What would you like to do?',
+      choices: ['View All', 'View Employees', 'View Departments', 'View Roles', 'Add Employee', 'Add Department', 'Add Role', 'Update Employees Role']
+    }
+  ]).then(answer => {
+    if (answer.mainQuestion === 'View All') {
+      viewAll()
+    } else if (answer.mainQuestion === 'View Employees') {
+      viewEmployee()
+    } else if (answer.mainQuestion === 'View Departments') {
+      viewDepartment()
+    } else if (answer.mainQuestion === 'View Roles') {
+      viewRoles()
+    } else if (answer.mainQuestion === 'Add Employee') {
+      addEmployee()
+    } else if (answer.mainQuestion === 'Add Department') {
+      addDepartment()
+    } else if (answer.mainQuestion === 'Add Role') {
+      addRole()
+    } else if (answer.mainQuestion === 'Update Emplyees Role')
+      updateEmployeeRole()
+  })
+};
 
-      db.query("SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT(manager.first_name, '', manager.last_name) AS manager FROM employee LEFT JOIN role ON emplyee_id = role.id LEFT JOIN department ON role.department_id = department.id LEFT JOIN employee manager ON manager.id = employee.manager_id;")
+const init = () => {
+  mainMenu();
+};
 
-    const init = () => {
-      mainMenu();
-    };
-
-    init();
+init();
