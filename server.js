@@ -3,8 +3,6 @@ const mysql = require('mysql2');
 const inquirer = require('inquire');
 const { mainPrompts, departmentPrompts} = require('./lib/prompts');
 
-const PORT = process.env.PORT || 3001;
-const app = express();
 
 const db = mysql.createConnection(
   {
@@ -53,7 +51,18 @@ function addEmployee() {
           type: 'input',
           name: 'Role name',
           message: 'Name of role?'
-        }
+        },
+        {
+          type: 'number',
+          name: 'name',
+          message: 'What is the name of the role?',
+        },
+        {
+          type: 'list',
+          name: 'department',
+          message: 'What department does the role go to?',
+          choices: 
+        },
       ]).then(answers => {
         db.query("INSERT INTO roles (name) VALUES")
           ('${answer.RoleName}'), (err, res) => {
@@ -93,6 +102,8 @@ function addEmployee() {
 
       db.query("SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT(manager.first_name, '', manager.last_name) AS manager FROM employee LEFT JOIN role ON emplyee_id = role.id LEFT JOIN department ON role.department_id = department.id LEFT JOIN employee manager ON manager.id = employee.manager_id;")
 
-      app.listen(PORT, () => {
-        console.log(`Server running on port ${PORT}`);
-      });
+    const init = () => {
+      mainMenu();
+    };
+
+    init();

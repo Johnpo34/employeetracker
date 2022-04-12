@@ -23,18 +23,18 @@ VALUES (01, 'Sales'),
         (04, 'Legal');
 
 INSERT INTO roles (id, title, salary, department_id)
-VALUES  (01, 'Sales lead', ),
-        (02, 'Salesperson'),
-        (03, 'Lead Engineer'),
-        (04, 'Software Engineer'),
-        (05, 'Account Manager'),
-        (06, 'Accountant'),
-        (07, 'Legal Team Lead'),
-        (08, 'Lawyer');
+VALUES  (01, 'Sales lead', 80000, 1),
+        (02, 'Salesperson', 50000, 1),
+        (03, 'Lead Engineer' 130000, 2),
+        (04, 'Software Engineer' 100000, 2),
+        (05, 'Account Manager' 90000, 3),
+        (06, 'Accountant' 70000, 3),
+        (07, 'Legal Team Lead' 85000, 4),
+        (08, 'Lawyer' 65000, 4);
 
 INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
-VALUES (01, 'John', 'Pohl'),
-        (02, 'Marc', 'Petrell'),
-        (03, 'Jordan', 'Cantley'),
-        (04, 'Larry', 'David'),
-        (05, 'Cooper', 'Jackson');
+VALUES (01, 'John', 'Pohl', 2, null),
+        (02, 'Marc', 'Petrell', 3, 5),
+        (03, 'Jordan', 'Cantley', 1, null),
+        (04, 'Larry', 'David', 4, 7),
+        (05, 'Cooper', 'Jackson', 2, 3);
