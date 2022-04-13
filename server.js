@@ -1,4 +1,3 @@
-const express = require("express");
 const mysql = require('mysql2');
 const inquirer = require('inquire');
 const { mainPrompts, departmentPrompts } = require('./lib/prompts');
@@ -33,7 +32,11 @@ function addEmployee() {
         function (err, employeeList) {
           console.log(employeeList);
 
-
+          employeeList = employeeList.map(role => {
+            return {
+              value: department.id,
+            };
+          });
 
           inquirer.prompt([
             {
@@ -59,7 +62,9 @@ function addEmployee() {
                 if (err) throw err;
                 console.log('$(answers.EmployeeName} added to the database');
               }
-          })
+            )
+          }
+          )
         }
       )
     }
@@ -75,11 +80,11 @@ function addDepartment() {
     }
     // fix then.
   ]).then(answers => {
-    db.query('INSERT INTO departments (name) VALUES')
-      ('${answer.DepartmentName}'), (err, res) => {
-        if (err) throw err;
-        console.log('${answers.DepartmentName} added to the database.');
-      }
+    db.query('INSERT INTO department (name) VALUES (?);', [answers.department], (err, res) => {
+      if (err) throw err;
+      console.log('${answers.DepartmentName} added to the database.');
+    }
+    )
   })
 };
 
@@ -100,10 +105,15 @@ function addRole() {
       type: 'list',
       name: 'department',
       message: 'What department does the role go to?',
-      choices: 
-        },
-  // fix then
-      ]).then(answers => {
+      choices: [
+        'Sales',
+        'Engineering',
+        'Finance',
+        'Legal'
+      ]
+    },
+    // fix then
+  ]).then(answers => {
     db.query("INSERT INTO role (name) VALUES")
       ('${answer.RoleName}'), (err, res) => {
         if (err) throw err;
@@ -141,8 +151,8 @@ function init() {
   })
 };
 
-const init = () => {
-  mainMenu();
-};
+// const init = () => {
+//   mainMenu();
+// };
 
 init();
