@@ -33,8 +33,8 @@ VALUES  ('Sales lead', 80000, 1),
         ('Lawyer', 65000, 4);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ('John', 'Pohl', 2, null);
-        ('Marc', 'Petrell', 3, 5),
+VALUES ('John', 'Pohl', 2, null),
+        ('Marc', 'Petrell', 3, null),
         ('Jordan', 'Cantley', 1, null),
         ('Larry', 'David', 4, null),
-        ('Cooper', 'Jackson', 2, n);
+        ('Cooper', 'Jackson', 2, null);

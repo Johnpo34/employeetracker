@@ -1,5 +1,5 @@
 const mysql = require('mysql2');
-const inquirer = require('inquire');
+const inquirer = require('inquirer');
 const { mainPrompts, departmentPrompts } = require('./lib/prompts');
 
 
@@ -15,27 +15,34 @@ const db = mysql.createConnection(
 );
 
 function addEmployee() {
+
   db.query(
-    'SELECT * FROM "role"',
+    'SELECT role.id, role.title, role.salary FROM role',
     function (err, roleList) {
       console.log(roleList);
 
-      roleList = roleList.map(role => {
-        return {
-          value: role.id,
-          name: role.title,
-        };
-      });
-
       db.query(
-        'SELECT * FROM "employee"',
+        'SELECT employee.first_name, employee.last_name, employee.role_id FROM employee',
         function (err, employeeList) {
           console.log(employeeList);
 
-          employeeList = employeeList.map(role => {
+          employeeList = employeeList.map(employee => {
             return {
-              value: department.id,
+              value: employee.id,
+              name: employee.first_name + ' ' + employee.last_name
             };
+          });
+
+          roleList = roleList.map(role => {
+            return {
+              value: role.id,
+              name: role.title
+            };
+          });
+
+          employeeList.push({
+            value: null,
+            name: 'None'
           });
 
           inquirer.prompt([
@@ -55,12 +62,14 @@ function addEmployee() {
               name: 'roleId',
               message: 'Please select a role for the user.',
             }
+            // manager question should go here
           ]).then(answers => {
             db.query(
-              'INSERT INTO employee (first_name) VALUES (?);', [answers.firstName],
+              'INSERT INTO employee (first_name, last_name, role_id) VALUES (?,?,?);', [answers.firstName, answers.lastName, answers.roleId],
               (err, res) => {
                 if (err) throw err;
                 console.log('$(answers.EmployeeName} added to the database');
+                init()
               }
             )
           }
@@ -80,16 +89,22 @@ function addDepartment() {
     }
     // fix then.
   ]).then(answers => {
-    db.query('INSERT INTO department (name) VALUES (?);', [answers.department], (err, res) => {
+    db.query('INSERT INTO department (name) VALUES (?);', [answers.departmentName], (err, res) => {
       if (err) throw err;
       console.log('${answers.DepartmentName} added to the database.');
+      init()
     }
     )
   })
 };
 
 function addRole() {
-  db.query
+  `SELECT department.name, department.id`
+  db.query(
+    'SELECT department.name, department.id FROM department',
+    function (err, departmentList) {
+      console.log(departmentList);
+// map function
   inquirer.prompt([
     {
       type: 'input',
@@ -106,23 +121,21 @@ function addRole() {
       name: 'department',
       message: 'What department does the role go to?',
       choices: [
-        'Sales',
-        'Engineering',
-        'Finance',
-        'Legal'
+      //  departmentList
       ]
     },
     // fix then
   ]).then(answers => {
-    db.query("INSERT INTO role (name) VALUES")
+    // add columns for role and ? for values and then array.
+    db.query("INSERT INTO role () VALUES")
       ('${answer.RoleName}'), (err, res) => {
         if (err) throw err;
         console.log('$answers.RoleName} added to the database.');
       }
   })
+})
 };
 
-// insert query to add data to employee table
 function init() {
   inquirer.prompt([
     {
@@ -135,7 +148,7 @@ function init() {
     if (answer.mainQuestion === 'View All') {
       viewAll()
     } else if (answer.mainQuestion === 'View Employees') {
-      viewEmployee()
+      viewEmployee();
     } else if (answer.mainQuestion === 'View Departments') {
       viewDepartment()
     } else if (answer.mainQuestion === 'View Roles') {
@@ -151,6 +164,41 @@ function init() {
   })
 };
 
+function viewEmployee() {
+  const sql = `SELECT employee.id, employee.first_name, employee.last_name, role.title, role.salary, department.name AS department, CONCAT (manager.first_name, ' ', manager.last_name) AS manager FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id LEFT JOIN employee manager ON manager.id = employee.manager_id;`;
+  db.query(sql, (err, rows) => {
+    if (err) {
+      console.log(err)
+      return;
+    }
+    console.table(rows)
+    init()
+  });
+};
+
+function viewDepartment() {
+  const sql = `SELECT department.id, department.name FROM department`
+  db.query(sql, (err, rows) => {
+    if (err) {
+      console.log(err)
+      return;
+    }
+    console.table(rows)
+    init()
+  })
+}
+
+function viewRoles() {
+  const sql = `SELECT role.id, role.title, department.name FROM role LEFT JOIN department ON role.department_id = department.id`
+  db.query(sql, (err, rows) => {
+    if (err) {
+      console.log(err)
+      return;
+    }
+    console.table(rows)
+    init()
+  })
+}
 // const init = () => {
 //   mainMenu();
 // };
