@@ -107,8 +107,8 @@ function addRole() {
       // map function
       departmentList = departmentList.map(role => {
         return {
-          value: department.id,
-          name: department.title
+          value: role.id,
+          name: role.title
         };
       });
 
