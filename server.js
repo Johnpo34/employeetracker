@@ -116,12 +116,7 @@ function addRole() {
         {
           type: 'input',
           name: 'Role name',
-          message: 'Name of role?'
-        },
-        {
-          type: 'number',
-          name: 'name',
-          message: 'What is the name of the role?',
+          message: 'What is the Name of the role?'
         },
         {
           type: 'list',
