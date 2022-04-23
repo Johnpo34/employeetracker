@@ -148,7 +148,7 @@ function addRole() {
         type: 'list',
         name: 'mainQuestion',
         message: 'What would you like to do?',
-        choices: ['View All', 'View Employees', 'View Departments', 'View Roles', 'Add Employee', 'Add Department', 'Add Role', 'Update Employees Role']
+        choices: ['View All', 'View Employees', 'View Departments', 'View Roles', 'Add Employee', 'Add Department', 'Add Role']
       }
     ]).then(answer => {
       if (answer.mainQuestion === 'View All') {

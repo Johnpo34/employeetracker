@@ -6,7 +6,7 @@ For this project, I built an employee database where a user can go through see a
 https://github.com/Johnpo34/employeetracker
 
 ## walkthrough video URL
-
+https://drive.google.com/file/d/1sls3zMVRle2a21N3_BMoxbZt_ZnN11rd/view
 ## Screenshot
 <img width="750" alt="Screen Shot 2022-04-23 at 11 31 31 AM" src="https://user-images.githubusercontent.com/94233506/164913942-5231fda7-efdc-4f2e-bd7d-2f122379b4f2.png">
 
