@@ -129,6 +129,10 @@ function addRole() {
           message: 'What department does the role go to?',
           choices: [
             //  departmentList
+            'Sales',
+            'Engineering',
+            "Finance",
+            'Legal'
           ]
         },
         // fix then
@@ -166,8 +170,7 @@ function addRole() {
         addDepartment()
       } else if (answer.mainQuestion === 'Add Role') {
         addRole()
-      } else if (answer.mainQuestion === 'Update Emplyees Role')
-        updateEmployeeRole()
+      } 
     })
   };
 
